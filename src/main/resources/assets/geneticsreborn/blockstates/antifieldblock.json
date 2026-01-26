@@ -2,7 +2,7 @@
     "forge_marker": 1,
     "defaults": {
         "textures": {
-            "all": "geneticsreborn:blocks/machine_bottom"
+            "all": "geneticsreborn:blocks/Machine_Bottom"
         }
     },
     "variants": {

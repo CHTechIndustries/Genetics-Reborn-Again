@@ -1,7 +1,7 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "geneticsreborn:items/metalsyringe"
+        "layer0": "GeneticsReborn:items/MetalSyringe"
     }
 }
 

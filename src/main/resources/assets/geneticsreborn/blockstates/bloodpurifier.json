@@ -1,7 +1,7 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "geneticsreborn:bloodpurifier"
+    "model": "geneticsreborn:BloodPurifier"
   },
   "variants": {
     "normal": [{}],

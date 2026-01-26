@@ -1,12 +1,5 @@
 package com.theundertaker11.geneticsreborn.api.capability.maxhealth;
 
-import java.util.Collections;
-import java.util.UUID;
-
-import javax.annotation.Nullable;
-
-import com.theundertaker11.geneticsreborn.util.ModUtils;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeMap;
@@ -14,6 +7,13 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.network.play.server.SPacketEntityProperties;
 import net.minecraft.world.WorldServer;
+
+import javax.annotation.Nullable;
+
+import com.theundertaker11.geneticsreborn.util.ModUtils;
+
+import java.util.Collections;
+import java.util.UUID;
 
 /**
  * Default implementation of {@link IMaxHealth}.
@@ -55,8 +55,8 @@ public class MaxHealth implements IMaxHealth {
 	public MaxHealth(@Nullable EntityLivingBase entity) {
 		this.entity = entity;
 	}
-
-	public MaxHealth() {
+	public MaxHealth()
+	{
 		this(null);
 	}
 
@@ -91,13 +91,14 @@ public class MaxHealth implements IMaxHealth {
 	public final void addBonusMaxHealth(float healthToAdd) {
 		setBonusMaxHealth(getBonusMaxHealth() + healthToAdd);
 	}
-
+	
 	/**
 	 * Synchronise the entity's max health to watching clients.
 	 */
 	@Override
 	public void synchronise() {
-		if (entity != null && !entity.getEntityWorld().isRemote) {
+		if (entity != null && !entity.getEntityWorld().isRemote)
+		{
 			final IAttributeInstance entityMaxHealthAttribute = entity.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
 			final SPacketEntityProperties packet = new SPacketEntityProperties(entity.getEntityId(), Collections.singleton(entityMaxHealthAttribute));
 			((WorldServer) entity.getEntityWorld()).getEntityTracker().sendToTrackingAndSelf(entity, packet);
@@ -121,14 +122,19 @@ public class MaxHealth implements IMaxHealth {
 
 		final IAttributeInstance entityMaxHealthAttribute = entity.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
 
+		// Remove all modifiers from the dummy attribute
 		dummyMaxHealthAttribute.getModifiers().forEach(dummyMaxHealthAttribute::removeModifier);
 
+		// Copy the base value and modifiers except this class's from the entity's attribute to the dummy attribute
 		dummyMaxHealthAttribute.setBaseValue(entityMaxHealthAttribute.getBaseValue());
 		entityMaxHealthAttribute.getModifiers().stream().filter(modifier -> !modifier.getID().equals(MODIFIER_ID)).forEach(dummyMaxHealthAttribute::applyModifier);
 
 		AttributeModifier modifier = createModifier();
 		dummyMaxHealthAttribute.applyModifier(modifier);
 
+		// Increment bonus max health by 0.5 until the max health is at least 2.0 (1 heart).
+		// We do this to avoid setting the entity's max health to 0, which would kill it (and prevent it from respawning if it's a player).
+		// The attribute itself will prevent its value from exceeding the maximum, so adding more than the maximum max health is harmless.
 		while (dummyMaxHealthAttribute.getAttributeValue() < MIN_AMOUNT) {
 			dummyMaxHealthAttribute.removeModifier(modifier);
 			bonusMaxHealth += 0.5f;
@@ -145,8 +151,11 @@ public class MaxHealth implements IMaxHealth {
 
 			oldAmount = (float) oldModifier.getAmount();
 
+			//Logger.debug(CapabilityMaxHealth.LOG_MARKER, "Max Health Changed! Entity: %s - Old: %s - New: %s", entity, CapabilityMaxHealth.formatMaxHealth(oldAmount), CapabilityMaxHealth.formatMaxHealth(newAmount));
 		} else {
 			oldAmount = 0.0f;
+
+			//Logger.debug(CapabilityMaxHealth.LOG_MARKER, "Max Health Added! Entity: %s - New: %s", entity, CapabilityMaxHealth.formatMaxHealth(newAmount));
 		}
 
 		entityMaxHealthAttribute.applyModifier(modifier);

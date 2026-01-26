@@ -1,7 +1,7 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "geneticsreborn:plasmidinfuser"
+    "model": "geneticsreborn:PlasmidInfuser"
   },
   "variants": {
     "normal": [{}],

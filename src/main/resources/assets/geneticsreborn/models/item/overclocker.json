@@ -1,7 +1,7 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "geneticsreborn:items/overclocker"
+        "layer0": "GeneticsReborn:items/Overclocker"
     }
 }
 
