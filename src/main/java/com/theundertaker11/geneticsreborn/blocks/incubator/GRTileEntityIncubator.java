@@ -229,7 +229,7 @@ public class GRTileEntityIncubator extends GRTileEntityBasicEnergyReceiver imple
             markDirty();
         }
     };
-    
+
     @SuppressWarnings("unchecked")
 	@Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {

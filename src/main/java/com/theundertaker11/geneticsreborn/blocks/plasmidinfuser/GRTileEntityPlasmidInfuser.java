@@ -167,7 +167,7 @@ public class GRTileEntityPlasmidInfuser extends GRTileEntityBasicEnergyReceiver 
 		} else super.setField(id, value);		
 
 	}
-    	
+
 	/* Issue 180 conflicts with issue 221 -- not sure how to resolve it.
     //these are the output slots, output only allowed when plasmid is done
     private ItemStackHandler outputStackHandler =  new ItemStackHandlerControl(itemStackHandlerOutput) {
@@ -177,19 +177,19 @@ public class GRTileEntityPlasmidInfuser extends GRTileEntityBasicEnergyReceiver 
        	  	if (num < numNeeded) return ItemStack.EMPTY;
        	  	return super.extractItem(slot, amount, simulate);
         }
-    };	
+    };
 
     @SuppressWarnings("unchecked")
 	@Override
     public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
         if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            if (facing == null) return (T) itemStackHandlerOutput;            
-            if (facing == EnumFacing.DOWN) return (T) outputStackHandler;            
-            if (facing == EnumFacing.UP) return (T) itemStackHandler;            
+            if (facing == null) return (T) itemStackHandlerOutput;
+            if (facing == EnumFacing.DOWN) return (T) outputStackHandler;
+            if (facing == EnumFacing.UP) return (T) itemStackHandler;
         }
 
         return super.getCapability(capability, facing);
     }
     */
-    
+
 }
